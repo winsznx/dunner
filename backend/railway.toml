@@ -1,0 +1,7 @@
+[build]
+builder = "RAILPACK"
+
+[deploy]
+startCommand = "bun run src/db/migrate.ts && bun --smol run src/index.ts"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
