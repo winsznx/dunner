@@ -18,7 +18,6 @@
     "android": {
       "package": "com.dunner.app",
       "userInterfaceStyle": "dark",
-      "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png",
@@ -63,7 +62,10 @@
         {
           "microphonePermission": "Dunner uses your microphone to record a short voice sample. This becomes the voice your AI agent uses to call your customers."
         }
-      ]
+      ],
+      "@sentry/react-native",
+      "expo-image",
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true,
