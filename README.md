@@ -12,7 +12,6 @@
 
   <p>
     <a href="https://dunner.xyz">Website</a> ·
-    <a href="https://dunner.xyz/admin">Admin</a> ·
     <a href="https://x.com/dunner_app">X</a> ·
     <a href="https://www.linkedin.com/company/dunner">LinkedIn</a> ·
     <a href="https://www.instagram.com/dunner_app">Instagram</a> ·
@@ -28,7 +27,7 @@ A SaaS customer's card declines. Today, that customer gets a polite email, ignor
 
 Dunner picks up the phone. Within minutes of `invoice.payment_failed`, a real call goes out to the customer in **the founder's own cloned voice**. The agent doesn't just leave a message — it has live Stripe API access. It can pause the subscription, swap the payment method, apply a recovery coupon, downgrade the plan, or send a fresh checkout link — mid-call, in real time. It only earns a fee when the recovery succeeds.
 
-Built on **ElevenLabs Conversational AI** for voice cloning + agent orchestration, **Stripe Connect** for the merchant relationship and the success-fee rail, and **Telnyx SIP** for telephony. Mobile-first iOS app for the merchant; Next.js landing + admin for the public-facing surface.
+Built on **ElevenLabs Conversational AI** for voice cloning + agent orchestration, **Stripe Connect** for the merchant relationship and the success-fee rail, and **Telnyx SIP** for telephony. Mobile-first app for the merchant; Next.js landing for the public-facing surface.
 
 ---
 
@@ -52,7 +51,6 @@ Built on **ElevenLabs Conversational AI** for voice cloning + agent orchestratio
 | ------------ | ---------------------------- | ---------------------------------------------- |
 | Marketing    | https://dunner.xyz           | Waitlist signup, demo video, brand             |
 | Backend API  | https://api.dunner.xyz       | REST + WS, Stripe + EL webhooks                |
-| Admin        | https://dunner.xyz/admin     | Clerk-gated, allowlisted by email              |
 | Mobile (iOS) | TestFlight (private)         | Production build via EAS                       |
 | Mobile (Android) | APK via waitlist invite  | `ANDROID_APK_URL` set on backend service       |
 
@@ -69,10 +67,10 @@ Built on **ElevenLabs Conversational AI** for voice cloning + agent orchestratio
                               ▼
 ┌──────────────────────────────────────────────────────────────────────┐
 │                  BACKEND (Hono on Bun · Railway)                     │
-│  REST · Webhooks · WS hub · Stripe-action callbacks · Admin          │
+│  REST · Webhooks · WS hub · Stripe-action callbacks                  │
 │  /me /recoveries  /webhooks/stripe   /ws/call/:id  /stripe-actions/* │
-│  /agent/config    /webhooks/eleven   /ws/merchant  /admin/*          │
-│  /onboarding/*    /waitlist          /auth/redeem-code               │
+│  /agent/config    /webhooks/eleven   /ws/merchant  /onboarding/*     │
+│  /waitlist        /auth/redeem-code                                  │
 └──────────────────────────────────────────────────────────────────────┘
         │              │              │              │
         ▼              ▼              ▼              ▼
@@ -111,12 +109,11 @@ dunner/
 │   │   ├── db/            Drizzle schema + migrations
 │   │   └── lib/           broadcast hub, Sentry
 │   └── drizzle/           SQL migrations
-├── landing/         Next.js 16 marketing site + admin dashboard
+├── landing/         Next.js 16 marketing site (+ internal ops dashboard)
 │   ├── app/
 │   │   ├── components/    hero, voice section, pricing, footer
 │   │   ├── api/           early-access route (forwards to backend)
-│   │   └── admin/         Clerk-gated KPI + waitlist + merchants + recoveries
-│   ├── lib/admin.ts       server-side admin fetch helper
+│   │   └── download/      install instructions for invited users
 │   ├── lib/brand.ts       shared brand tokens (mirror of mobile design tokens)
 │   └── Dockerfile         scoped Railway build
 ├── src/             Expo mobile app (root)
@@ -173,47 +170,17 @@ stripe listen --forward-to http://localhost:3000/webhooks/stripe
 
 ---
 
-## Environment variables
+## Configuration
 
-### Backend (`backend/.env.local`)
+Each workspace has its own `.env.example` with the full list of required
+keys and provisioning notes:
 
-| Variable                       | Description                                                  | Required             |
-| ------------------------------ | ------------------------------------------------------------ | -------------------- |
-| `DATABASE_URL`                 | Postgres connection string                                   | ✅                   |
-| `CLERK_SECRET_KEY`             | Clerk Backend API key                                        | ✅                   |
-| `STRIPE_SECRET_KEY`            | Stripe secret key (Connect-enabled)                          | ✅                   |
-| `STRIPE_WEBHOOK_SECRET`        | Stripe webhook signing secret                                | ✅                   |
-| `STRIPE_CONNECT_CLIENT_ID`     | `ca_…` from Connect settings                                 | ✅                   |
-| `EL_KEY`                       | ElevenLabs API key                                           | ✅                   |
-| `ELEVENLABS_WEBHOOK_SECRET`    | EL workspace webhook secret                                  | ✅                   |
-| `ELEVENLABS_PHONE_NUMBER_ID`   | EL phone number ID (SIP-trunked via Telnyx)                  | ✅                   |
-| `RESEND_API_KEY`               | Resend API key                                               | ✅                   |
-| `RESEND_FROM_EMAIL`            | `Dunner <hello@dunner.xyz>`                                  | ✅                   |
-| `ADMIN_EMAILS`                 | Comma-separated allowlist for `/admin`                       | ✅                   |
-| `UPSTASH_REDIS_REST_URL/_TOKEN`| Optional — rate limiter (fails open without)                 | recommended          |
-| `ANDROID_APK_URL`              | Used in invite emails                                        | optional             |
-| `LANDING_URL`                  | `https://dunner.xyz`                                         | optional             |
-| `SENTRY_DSN_BACKEND`           | Error tracking                                               | optional             |
+- [`backend/.env.example`](./backend/.env.example) — Postgres, Stripe,
+  ElevenLabs, Clerk, Resend
+- [`landing/.env.example`](./landing/.env.example) — backend URL, Clerk
+- [`.env.example`](./.env.example) — mobile (Expo public keys)
 
-### Landing (`landing/.env.local`)
-
-| Variable                              | Description                            | Required |
-| ------------------------------------- | -------------------------------------- | -------- |
-| `BACKEND_URL`                         | `https://api.dunner.xyz`               | ✅       |
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`   | Clerk frontend key (same instance)     | ✅       |
-| `CLERK_SECRET_KEY`                    | Clerk backend key                      | ✅       |
-| `ADMIN_EMAILS`                        | Same allowlist as backend              | ✅       |
-
-### Mobile (`.env.local`)
-
-| Variable                              | Description                            | Required |
-| ------------------------------------- | -------------------------------------- | -------- |
-| `EXPO_PUBLIC_API_BASE_URL`            | `https://api.dunner.xyz`               | ✅       |
-| `EXPO_PUBLIC_WS_BASE_URL`             | `wss://api.dunner.xyz`                 | ✅       |
-| `EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY`   | Clerk frontend key                     | ✅       |
-| `EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY`  | Stripe publishable key                 | ✅       |
-| `EXPO_PUBLIC_SENTRY_DSN_MOBILE`       | Sentry RN DSN                          | optional |
-| `EXPO_PUBLIC_POSTHOG_KEY/HOST`        | PostHog product analytics              | optional |
+Copy each to `.env.local`, fill in the values, and you're good.
 
 ---
 
@@ -241,7 +208,7 @@ Dunner ships with deep ElevenLabs integration as the core of the product:
 - **Twilio/SIP outbound** via `/v1/convai/twilio/outbound-call` with `agent_override.voice.voice_id` so each call uses the merchant's voice
 - **Post-call webhooks** drive the recovery state machine — outcome routing reads `tool_calls_fired` to decide RECOVERED_PENDING vs CHURNED vs RETRY_QUEUED
 
-This isn't a tutorial demo. It's a multi-tenant SaaS with real Stripe Connect money flow, signed webhooks, idempotency, rate limiting, observability, and an admin dashboard — built end-to-end in the hackathon window.
+This isn't a tutorial demo. It's a multi-tenant SaaS with real Stripe Connect money flow, signed webhooks, idempotency, rate limiting, and observability — built end-to-end in the hackathon window.
 
 ---
 

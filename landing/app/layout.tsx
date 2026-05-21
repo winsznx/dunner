@@ -43,6 +43,14 @@ export const metadata: Metadata = {
     title: "Dunner — When payments fail, Dunner calls.",
     description:
       "Your cloned voice. Live Stripe actions. A fee only when it works.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Dunner — When payments fail, Dunner calls.",
+      },
+    ],
   },
   openGraph: {
     title: "Dunner — When payments fail, Dunner calls.",
@@ -52,6 +60,14 @@ export const metadata: Metadata = {
     siteName: "Dunner",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Dunner — When payments fail, Dunner calls.",
+      },
+    ],
   },
   robots: {
     index: true,

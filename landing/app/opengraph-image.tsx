@@ -1,21 +1,19 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+// Node runtime (default) — Railway runs on Node, no need for Edge.
 export const alt = "Dunner — When payments fail, Dunner calls.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default async function OGImage() {
-  // Fetch Syne ExtraBold from Google Fonts
-  const syneFont = await fetch(
-    "https://fonts.gstatic.com/s/syne/v22/8vIS7w4qzmVxsWxjBZRjr0FKM_04uQ6fWp-R.woff2"
-  ).then((res) => res.arrayBuffer());
-
-  // Fetch Space Grotesk from Google Fonts
-  const spaceFont = await fetch(
-    "https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gozuPTPTg.woff2"
-  ).then((res) => res.arrayBuffer());
-
+/**
+ * Open Graph image generated at request time via @vercel/og (next/og).
+ *
+ * Why no custom font fetch: pulling Google Fonts at request time is fragile —
+ * gstatic occasionally serves HTML redirects instead of the actual woff2,
+ * which breaks ImageResponse with "Unsupported OpenType signature". The
+ * defaults (system sans) render fine and ship reliably.
+ */
+export default function OGImage() {
   return new ImageResponse(
     (
       <div
@@ -27,7 +25,6 @@ export default async function OGImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          fontFamily: "Space Grotesk",
           position: "relative",
           overflow: "hidden",
         }}
@@ -67,8 +64,7 @@ export default async function OGImage() {
               fontSize: "44px",
               fontWeight: 800,
               color: "#FF1A1A",
-              letterSpacing: "-1px",
-              fontFamily: "Syne",
+              letterSpacing: "-1.5px",
             }}
           >
             dunner
@@ -76,27 +72,25 @@ export default async function OGImage() {
         </div>
 
         {/* Middle — headline */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
           <span
             style={{
-              fontSize: "80px",
+              fontSize: "84px",
               fontWeight: 800,
               color: "#EEEEEF",
               lineHeight: 1.0,
-              letterSpacing: "-3px",
-              fontFamily: "Syne",
+              letterSpacing: "-3.5px",
             }}
           >
             When payments fail,
           </span>
           <span
             style={{
-              fontSize: "80px",
+              fontSize: "84px",
               fontWeight: 800,
               color: "#FF1A1A",
               lineHeight: 1.0,
-              letterSpacing: "-3px",
-              fontFamily: "Syne",
+              letterSpacing: "-3.5px",
             }}
           >
             Dunner calls.
@@ -113,14 +107,14 @@ export default async function OGImage() {
         >
           <span
             style={{
-              fontSize: "22px",
+              fontSize: "24px",
               color: "#A0A0AB",
-              maxWidth: "680px",
+              maxWidth: "720px",
               lineHeight: 1.5,
-              fontFamily: "Space Grotesk",
             }}
           >
-            The only recovery tool that sounds like you — and only charges when it works.
+            The only recovery tool that sounds like you — and only charges
+            when it works.
           </span>
 
           {/* Waveform bars */}
@@ -128,18 +122,18 @@ export default async function OGImage() {
             style={{
               display: "flex",
               alignItems: "flex-end",
-              gap: "4px",
-              opacity: 0.7,
+              gap: "5px",
+              opacity: 0.75,
             }}
           >
             {[20, 36, 52, 40, 64, 48, 32, 56, 44, 28, 48, 36].map((h, i) => (
               <div
                 key={i}
                 style={{
-                  width: "4px",
+                  width: "5px",
                   height: `${h}px`,
                   background: "#22D3EE",
-                  borderRadius: "2px",
+                  borderRadius: "3px",
                   display: "flex",
                 }}
               />
@@ -148,22 +142,6 @@ export default async function OGImage() {
         </div>
       </div>
     ),
-    {
-      ...size,
-      fonts: [
-        {
-          name: "Syne",
-          data: syneFont,
-          weight: 800,
-          style: "normal",
-        },
-        {
-          name: "Space Grotesk",
-          data: spaceFont,
-          weight: 400,
-          style: "normal",
-        },
-      ],
-    }
+    { ...size },
   );
 }
