@@ -8,6 +8,13 @@
       "when": 1779219646678,
       "tag": "0000_fixed_wallow",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1779365215487,
+      "tag": "0001_solid_black_queen",
+      "breakpoints": true
     }
   ]
 }

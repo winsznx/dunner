@@ -41,3 +41,69 @@ app-example
 # generated native folders
 /ios
 /android
+
+# AI assistant tool folders (per-developer state, do not commit)
+.adal/
+.agents/
+.aider-desk/
+.augment/
+.bob/
+.claude/
+.codeartsdoer/
+.codebuddy/
+.codemaker/
+.codestudio/
+.commandcode/
+.continue/
+.cortex/
+.crush/
+.devin/
+.factory/
+.forge/
+.goose/
+.hermes/
+.iflow/
+.junie/
+.kilocode/
+.kiro/
+.kode/
+.mcpjam/
+.mux/
+.neovate/
+.openhands/
+.pi/
+.pochi/
+.cursor/
+.windsurf/
+.zed/
+.vscode/
+.idea/
+
+# Local env (never commit secrets)
+.env
+.env.local
+.env.*.local
+backend/.env
+backend/.env.local
+
+# Build artifacts
+.next/
+out/
+.turbo/
+
+# Logs
+*.log
+logs/
+
+# Tasks/scratch
+AGENT_PROGRESS.md
+tasks/
+.qoder/
+.qwen/
+.roo/
+.rovodev/
+.tabnine/
+.trae/
+.vibe/
+.zencoder/
+.cline/

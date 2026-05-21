@@ -168,3 +168,30 @@ export const agentApiTokens = pgTable("agent_api_tokens", {
   tokenHash: text("token_hash").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+/**
+ * Waitlist subscribers from the landing page. One row per email, lifecycle:
+ * - `pending`: email captured, invite not yet sent
+ * - `invited`: invite + access code emailed
+ * - `redeemed`: user signed up in the app using the access code
+ * - `unsubscribed`: user opted out
+ *
+ * `access_code` is a short, human-typeable code (6 alphanum, uppercase) bound
+ * to the email. It's only valid for the email it was issued to. Once redeemed
+ * it can't be reused — see `routes/auth.ts` redeem flow.
+ */
+export const waitlistSubscribers = pgTable("waitlist_subscribers", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: text("email").notNull().unique(),
+  status: text("status").default("pending").notNull(),
+  accessCode: text("access_code").unique(),
+  source: text("source"),
+  referrer: text("referrer"),
+  ipAddress: text("ip_address"),
+  invitedAt: timestamp("invited_at"),
+  redeemedAt: timestamp("redeemed_at"),
+  redeemedByClerkUserId: text("redeemed_by_clerk_user_id"),
+  unsubscribedAt: timestamp("unsubscribed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
