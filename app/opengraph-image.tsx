@@ -79,10 +79,9 @@ export default async function OGImage() {
             style={{
               fontSize: "72px",
               fontWeight: 800,
-              color: "transparent",
+              color: "#22D3EE",
               lineHeight: 1.0,
               letterSpacing: "-2px",
-              WebkitTextStroke: "2px #EEEEEF",
             }}
           >
             Dunner calls.
