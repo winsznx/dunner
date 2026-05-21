@@ -48,17 +48,21 @@ export default function EarlyAccess() {
           Your next failed invoice should not become churn.
         </h2>
         <p className="text-[#A0A0AB] text-lg mb-12">
-          Enter your email and we&rsquo;ll send you a link to the app.
+          Drop your email. We&rsquo;ll send your access code and ship you
+          the app the moment your turn comes up.
         </p>
 
         {submitted ? (
           <div className="bg-[#1A1A1E] border border-[#10B981]/30 rounded-2xl px-8 py-10">
             <div className="w-2 h-2 rounded-full bg-[#10B981] mx-auto mb-4 pulse-ring" />
             <p className="text-[#EEEEEF] font-semibold text-lg mb-2">
-              Check your inbox.
+              You&rsquo;re on the list.
             </p>
             <p className="text-[#A0A0AB] text-sm">
-              We sent a confirmation to <span className="text-[#EEEEEF]">{email}</span>. Open it to get started.
+              We sent a 6-character access code to{" "}
+              <span className="text-[#EEEEEF]">{email}</span>. Keep it
+              somewhere safe — you&rsquo;ll need it when you sign in to the
+              app.
             </p>
           </div>
         ) : (
