@@ -1,0 +1,44 @@
+{
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "base": {
+      "node": "20.18.0",
+      "env": {
+        "EXPO_PUBLIC_API_BASE_URL": "https://api.dunner.xyz",
+        "EXPO_PUBLIC_WS_BASE_URL": "wss://api.dunner.xyz"
+      }
+    },
+    "development": {
+      "extends": "base",
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": { "simulator": false },
+      "android": { "buildType": "apk" }
+    },
+    "preview": {
+      "extends": "base",
+      "distribution": "internal",
+      "channel": "preview",
+      "android": {
+        "buildType": "apk",
+        "withoutCredentials": false
+      }
+    },
+    "production": {
+      "extends": "base",
+      "channel": "production",
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "ios": {
+        "autoIncrement": true
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
