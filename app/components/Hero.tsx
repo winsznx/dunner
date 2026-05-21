@@ -36,13 +36,13 @@ export default function Hero() {
           <div className="flex items-center gap-4 fade-up fade-up-4">
             <a
               href="#early-access"
-              className="bg-[#EEEEEF] text-[#0F0F11] font-semibold px-7 py-3.5 rounded-full hover:bg-white transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="bg-[#EEEEEF] text-[#0F0F11] font-semibold px-7 py-3.5 rounded-full transition-all duration-200 hover:bg-[#FF1A1A] hover:text-white hover:scale-95 active:scale-90"
             >
               Get early access
             </a>
             <a
               href="#how-it-works"
-              className="text-[#EEEEEF] font-medium px-7 py-3.5 rounded-full border border-[#3A3A3F] hover:border-[#6C6C74] transition-colors"
+              className="text-[#EEEEEF] font-medium px-7 py-3.5 rounded-full border border-[#3A3A3F] transition-all duration-200 hover:border-[#FF1A1A] hover:text-[#FF1A1A] hover:scale-95 active:scale-90"
             >
               See how it works
             </a>

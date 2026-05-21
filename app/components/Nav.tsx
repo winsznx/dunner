@@ -52,7 +52,7 @@ export default function Nav() {
         {/* CTA */}
         <a
           href="#early-access"
-          className="bg-[#EEEEEF] text-[#0F0F11] text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-white transition-colors"
+          className="bg-[#EEEEEF] text-[#0F0F11] text-sm font-semibold px-5 py-2.5 rounded-full transition-all duration-200 hover:bg-[#FF1A1A] hover:text-white hover:scale-95"
         >
           Get early access
         </a>

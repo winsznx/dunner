@@ -47,7 +47,7 @@ export default function EarlyAccess() {
             />
             <button
               type="submit"
-              className="bg-[#EEEEEF] text-[#0F0F11] font-semibold px-7 py-3.5 rounded-full hover:bg-white transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+              className="bg-[#EEEEEF] text-[#0F0F11] font-semibold px-7 py-3.5 rounded-full transition-all duration-200 hover:bg-[#FF1A1A] hover:text-white hover:scale-95 active:scale-90 whitespace-nowrap"
             >
               Get early access
             </button>

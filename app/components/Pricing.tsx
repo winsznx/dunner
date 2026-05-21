@@ -78,7 +78,7 @@ export default function Pricing() {
 
             <a
               href="#early-access"
-              className="bg-[#EEEEEF] text-[#0F0F11] font-semibold px-7 py-3.5 rounded-full hover:bg-white transition-all text-center hover:scale-[1.02] active:scale-[0.98]"
+              className="bg-[#EEEEEF] text-[#0F0F11] font-semibold px-7 py-3.5 rounded-full transition-all duration-200 text-center hover:bg-[#FF1A1A] hover:text-white hover:scale-95 active:scale-90"
             >
               Get early access
             </a>
