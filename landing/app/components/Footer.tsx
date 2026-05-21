@@ -68,7 +68,7 @@ export default function Footer() {
             Terms
           </a>
           <a
-            href="mailto:hello@dunner.xyz"
+            href="/contact"
             className="text-[#6C6C74] hover:text-[#A0A0AB] text-xs transition-colors"
           >
             Contact
