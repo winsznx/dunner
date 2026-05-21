@@ -7,6 +7,9 @@ export const metadata = {
   description: "Install the Dunner app on iOS or Android.",
 };
 
+const ANDROID_APK_URL = process.env.ANDROID_APK_URL;
+const IOS_TESTFLIGHT_URL = process.env.IOS_TESTFLIGHT_URL;
+
 export default function DownloadPage() {
   return (
     <div className="min-h-screen bg-[#0F0F11] text-[#EEEEEF] flex flex-col">
@@ -32,22 +35,22 @@ export default function DownloadPage() {
             Install Dunner.
           </h1>
           <p className="text-[#A0A0AB] text-lg leading-relaxed mb-12">
-            Open the install link below for your phone, then sign in with the
-            6-character access code from your invite email.
+            Pick your phone, install the app, sign in with the 6-character
+            access code from your invite email.
           </p>
 
           <div className="grid md:grid-cols-2 gap-4 mb-12">
             <PlatformCard
-              platform="iOS"
-              status="invite-only"
-              note="TestFlight invite is sent manually for the first cohort. Reply to your invite email with your Apple ID to be added."
-              cta={null}
+              platform="Android"
+              installUrl={ANDROID_APK_URL}
+              comingSoonNote="The Android APK ships this week. We&rsquo;ll email the install link the moment it lands."
+              installNote="Tap the download button, then open the file from your downloads and tap Install. You may need to allow installs from unknown sources for your browser."
             />
             <PlatformCard
-              platform="Android"
-              status="coming soon"
-              note="The Android APK ships this week. We'll email you the install link the moment it's ready."
-              cta={null}
+              platform="iOS"
+              installUrl={IOS_TESTFLIGHT_URL}
+              comingSoonNote="TestFlight invites are sent manually for the first cohort. Reply to your invite email with your Apple ID to be added."
+              installNote="Tap the button to open TestFlight, accept the invite, then install Dunner from there."
             />
           </div>
 
@@ -57,13 +60,13 @@ export default function DownloadPage() {
             </p>
             <p className="text-[#EEEEEF] text-sm leading-relaxed">
               The 6-character code in your invite email gates the first
-              sign-in. It binds to your email, so don&rsquo;t share it. If you
-              didn&rsquo;t get an email,{" "}
+              sign-in. It binds to your email, so don&rsquo;t share it. Lost
+              your invite?{" "}
               <a
                 href="mailto:hello@dunner.xyz"
                 className="text-[#22D3EE] hover:underline"
               >
-                ping us
+                Email us
               </a>
               .
             </p>
@@ -76,30 +79,42 @@ export default function DownloadPage() {
 
 function PlatformCard({
   platform,
-  status,
-  note,
-  cta,
+  installUrl,
+  comingSoonNote,
+  installNote,
 }: {
   platform: string;
-  status: string;
-  note: string;
-  cta: { label: string; href: string } | null;
+  installUrl: string | undefined;
+  comingSoonNote: string;
+  installNote: string;
 }) {
+  const ready = Boolean(installUrl);
   return (
-    <div className="bg-[#1A1A1E] border border-[#2A2A2F] rounded-2xl p-6 flex flex-col gap-3">
+    <div className="bg-[#1A1A1E] border border-[#2A2A2F] rounded-2xl p-6 flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <span className="text-[#EEEEEF] text-lg font-semibold">{platform}</span>
-        <span className="text-[10px] uppercase tracking-widest px-2 py-1 rounded-full bg-[#FBBF24]/15 text-[#FBBF24] font-medium">
-          {status}
+        <span
+          className={`text-[10px] uppercase tracking-widest px-2 py-1 rounded-full font-medium ${
+            ready
+              ? "bg-[#10B981]/15 text-[#10B981]"
+              : "bg-[#FBBF24]/15 text-[#FBBF24]"
+          }`}
+        >
+          {ready ? "ready" : "coming soon"}
         </span>
       </div>
-      <p className="text-[#A0A0AB] text-sm leading-relaxed flex-1">{note}</p>
-      {cta ? (
+      <p className="text-[#A0A0AB] text-sm leading-relaxed flex-1">
+        {ready ? installNote : comingSoonNote}
+      </p>
+      {ready && installUrl ? (
         <a
-          href={cta.href}
-          className="inline-flex items-center justify-center bg-[#EEEEEF] text-[#0F0F11] font-semibold px-5 py-2.5 rounded-full text-sm hover:bg-[#FF1A1A] hover:text-white transition-colors"
+          href={installUrl}
+          className="inline-flex items-center justify-center gap-2 bg-[#EEEEEF] text-[#0F0F11] font-semibold px-5 py-3 rounded-full text-sm hover:bg-[#FF1A1A] hover:text-white transition-colors"
         >
-          {cta.label}
+          {platform === "Android" ? "Download APK" : "Open TestFlight"}
+          <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </a>
       ) : null}
     </div>

@@ -29,7 +29,9 @@
         "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS",
         "android.permission.VIBRATE",
-        "android.permission.WAKE_LOCK"
+        "android.permission.WAKE_LOCK",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
       ],
       "predictiveBackGestureEnabled": false
     },
@@ -70,8 +72,10 @@
     "extra": {
       "apiBaseUrl": "http://localhost:3000",
       "eas": {
-        "projectId": ""
-      }
-    }
+        "projectId": "561ee3e8-109b-45d2-b237-484a61814cfd"
+      },
+      "router": {}
+    },
+    "owner": "winszn"
   }
 }
