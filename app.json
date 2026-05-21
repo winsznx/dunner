@@ -63,7 +63,6 @@
           "microphonePermission": "Dunner uses your microphone to record a short voice sample. This becomes the voice your AI agent uses to call your customers."
         }
       ],
-      "@sentry/react-native",
       "expo-image",
       "expo-asset"
     ],
