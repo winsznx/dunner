@@ -16,18 +16,47 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Dunner — When payments fail, Dunner calls.",
-  description: "The only recovery tool that sounds like you — and only charges when it works.",
+  metadataBase: new URL("https://dunner.xyz"),
+  title: {
+    default: "Dunner — When payments fail, Dunner calls.",
+    template: "%s · Dunner",
+  },
+  description:
+    "Voice-native failed-payment recovery for SaaS. Your cloned voice calls customers, negotiates a fix in real-time using live Stripe actions, and only charges when it works.",
+  applicationName: "Dunner",
+  keywords: [
+    "failed payment recovery",
+    "subscription recovery",
+    "voice AI",
+    "Stripe Connect",
+    "SaaS dunning",
+    "involuntary churn",
+    "ElevenLabs",
+  ],
+  authors: [{ name: "Dunner", url: "https://dunner.xyz" }],
+  creator: "Dunner",
+  publisher: "Dunner",
   twitter: {
     card: "summary_large_image",
+    site: "@dunner_app",
+    creator: "@dunner_app",
     title: "Dunner — When payments fail, Dunner calls.",
-    description: "Your cloned voice. Live Stripe actions. A fee only when it works.",
+    description:
+      "Your cloned voice. Live Stripe actions. A fee only when it works.",
   },
   openGraph: {
     title: "Dunner — When payments fail, Dunner calls.",
-    description: "Voice-native failed payment recovery for SaaS. Your cloned voice. Live Stripe actions. A fee only when it works.",
+    description:
+      "Voice-native failed-payment recovery for SaaS. Your cloned voice. Live Stripe actions. A fee only when it works.",
+    url: "https://dunner.xyz",
+    siteName: "Dunner",
     type: "website",
     locale: "en_US",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
 };
 
