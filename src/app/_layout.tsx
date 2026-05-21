@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import { Appearance, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Toast from "react-native-toast-message";
-import * as Sentry from "@sentry/react-native";
 import { PostHogProvider } from "posthog-react-native";
 import { tokenCache } from "@/lib/tokenCache";
 import {
@@ -23,18 +22,6 @@ if (!publishableKey) {
   throw new Error(
     "Missing EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY — set it in .env.local",
   );
-}
-
-const sentryDsn = process.env.EXPO_PUBLIC_SENTRY_DSN_MOBILE;
-if (sentryDsn) {
-  Sentry.init({
-    dsn: sentryDsn,
-    environment: __DEV__ ? "development" : "production",
-    tracesSampleRate: 0.1,
-    // Session replay: opt-in only on demand; capture rich context around errors.
-    replaysSessionSampleRate: 0,
-    replaysOnErrorSampleRate: 1.0,
-  });
 }
 
 const posthogKey = process.env.EXPO_PUBLIC_POSTHOG_KEY;
@@ -125,4 +112,4 @@ function RootLayout() {
   return inner;
 }
 
-export default sentryDsn ? Sentry.wrap(RootLayout) : RootLayout;
+export default RootLayout;
