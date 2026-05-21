@@ -16,7 +16,7 @@
     "@react-navigation/elements": "^2.9.10",
     "@react-navigation/native": "^7.1.33",
     "@sentry/react-native": "^7.11.0",
-    "@shopify/react-native-skia": "2.4.18",
+    "@shopify/react-native-skia": "2.6.2",
     "expo": "~55.0.26",
     "expo-asset": "~55.0.17",
     "expo-audio": "55.0.14",
@@ -63,5 +63,12 @@
     "onlyBuiltDependencies": [
       "@shopify/react-native-skia"
     ]
+  },
+  "expo": {
+    "install": {
+      "exclude": [
+        "@shopify/react-native-skia"
+      ]
+    }
   }
 }
