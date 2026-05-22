@@ -7,10 +7,14 @@ export const metadata = {
   description: "Install the Dunner app on iOS or Android.",
 };
 
-const ANDROID_APK_URL = process.env.ANDROID_APK_URL;
-const IOS_TESTFLIGHT_URL = process.env.IOS_TESTFLIGHT_URL;
+// Force dynamic so process.env is read on every request rather than at
+// build time. Without this, swapping ANDROID_APK_URL in Railway has no
+// effect until the container is rebuilt — bad UX for ops.
+export const dynamic = "force-dynamic";
 
 export default function DownloadPage() {
+  const ANDROID_APK_URL = process.env.ANDROID_APK_URL;
+  const IOS_TESTFLIGHT_URL = process.env.IOS_TESTFLIGHT_URL;
   return (
     <div className="min-h-screen bg-[#0F0F11] text-[#EEEEEF] flex flex-col">
       <header className="px-6 py-6">
