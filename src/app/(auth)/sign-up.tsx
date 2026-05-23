@@ -34,8 +34,20 @@ export default function SignUpScreen() {
 
   async function handleStart() {
     if (!isLoaded || submitting) return;
+    // Validate in order so the user sees one actionable error at a time.
+    if (!email.trim()) {
+      setError("Enter your email.");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
     if (!accessCodeOk) {
-      setError("Enter the 6-character access code from your invite email.");
+      setError(
+        "Enter the 6-character access code from your invite email. " +
+          "Don't have one? Sign up at dunner.xyz/#early-access.",
+      );
       return;
     }
     setError(null);
@@ -56,6 +68,10 @@ export default function SignUpScreen() {
 
   async function handleVerify() {
     if (!isLoaded || submitting) return;
+    if (code.trim().length < 4) {
+      setError("Enter the verification code from your email.");
+      return;
+    }
     setError(null);
     setSubmitting(true);
     try {
@@ -186,9 +202,7 @@ export default function SignUpScreen() {
 
               <Pressable
                 onPress={handleStart}
-                disabled={
-                  submitting || !email || password.length < 8 || !accessCodeOk
-                }
+                disabled={submitting}
                 className="bg-ink-primary py-3.5 rounded-md items-center active:opacity-80 disabled:opacity-40"
               >
                 {submitting ? (
@@ -225,7 +239,7 @@ export default function SignUpScreen() {
 
               <Pressable
                 onPress={handleVerify}
-                disabled={submitting || code.length < 4}
+                disabled={submitting}
                 className="bg-ink-primary py-3.5 rounded-md items-center active:opacity-80 disabled:opacity-40"
               >
                 {submitting ? (
