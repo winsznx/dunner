@@ -1,5 +1,6 @@
 import { useAuth, useClerk, useSignUp } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -177,27 +178,56 @@ export default function SignUpScreen() {
               </View>
 
               <View className="gap-1.5">
-                <Text className="text-ink-secondary text-sm">
-                  Access code
-                </Text>
+                <View className="flex-row items-center justify-between">
+                  <Text className="text-ink-secondary text-sm">
+                    Access code
+                  </Text>
+                  <Text
+                    className={`text-xs font-mono ${
+                      accessCodeOk
+                        ? "text-accent-recovery"
+                        : "text-ink-muted"
+                    }`}
+                  >
+                    {accessCode.length}/6
+                  </Text>
+                </View>
                 <TextInput
                   className="bg-bg-surface text-ink-primary px-4 py-3.5 rounded-md text-xl font-mono tracking-[6px]"
                   autoCapitalize="characters"
                   autoCorrect={false}
-                  placeholder="ABCD12"
-                  placeholderTextColor="#6C6C74"
+                  placeholder="——————"
+                  placeholderTextColor="#3A3A3F"
                   value={accessCode}
                   onChangeText={(t) => setAccessCode(t.toUpperCase())}
                   editable={!submitting}
                   maxLength={6}
                 />
-                <Text className="text-ink-muted text-xs">
-                  From your waitlist invite email.
-                </Text>
+                <View className="flex-row items-center flex-wrap">
+                  <Text className="text-ink-muted text-xs">
+                    From your invite email.{" "}
+                  </Text>
+                  <Pressable
+                    onPress={() =>
+                      WebBrowser.openBrowserAsync(
+                        "https://dunner.xyz/#early-access",
+                      )
+                    }
+                    hitSlop={6}
+                  >
+                    <Text className="text-accent-neutral text-xs font-sans-medium">
+                      Don't have one?
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
 
               {error ? (
-                <Text className="text-accent-failure text-sm">{error}</Text>
+                <View className="bg-accent-failure/10 border border-accent-failure/30 rounded-md px-3 py-2.5">
+                  <Text className="text-accent-failure text-sm leading-snug">
+                    {error}
+                  </Text>
+                </View>
               ) : null}
 
               <Pressable
@@ -234,7 +264,11 @@ export default function SignUpScreen() {
               </View>
 
               {error ? (
-                <Text className="text-accent-failure text-sm">{error}</Text>
+                <View className="bg-accent-failure/10 border border-accent-failure/30 rounded-md px-3 py-2.5">
+                  <Text className="text-accent-failure text-sm leading-snug">
+                    {error}
+                  </Text>
+                </View>
               ) : null}
 
               <Pressable
